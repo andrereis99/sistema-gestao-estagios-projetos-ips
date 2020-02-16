@@ -1,0 +1,59 @@
+﻿@model G13WebApplication.Models.Student
+@{
+    ViewData["Title"] = "Perfil2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<div class="container h-50">
+    <h2 class="h3-custom">Perfil Pessoal</h2>
+    <hr />
+    <div class="row h-100">
+        <div class="col-5">
+            <div class="card-body text-center h-75">
+                <img src="~/UsersImages/@ViewBag.Image" name="profilePhoto" class="rounded-circle" width="150" height="150">
+                <br />
+                <br />
+                <br />
+                @using (Html.BeginForm("UpdatePhoto", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input type="file" name="photo" class="file" accept="image/x-png,image/gif,image/jpeg">
+                    <input class="btn btn-primary mb-2 btncustom" type="submit" id="btnUpload" value="Adicionar" />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                }
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body card-custom2 h-75">
+                <br />
+                <h5>@Model.FirstName @Model.LastName</h5>
+                <br />
+                <h5>Nº: @Model.StudentNumber</h5>
+                <br />
+                <h5>@Model.Email</h5>
+                <br />
+                <a class="btn btn-primary btn-blue-custom w-100" asp-action="ViewStudentPublicProof" asp-route-StudentNumber="@Model.StudentNumber" style="margin-top:1%">Ver Prova Pública</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body card-custom h-75">
+                <br />
+                <h5>DO: @ViewData["auxTeacherNameString"]</h5>
+                <br />
+                <h5>Tipo TFC: @ViewData["auxTfcTypeString"]</h5>
+                <br />
+                <h5>TFC: @ViewData["auxTfcTypeString"]</h5>
+                <a class="btn btn-primary btn-blue-custom w-100" asp-controller="Atas" asp-action="Index" style="margin-top:11%">Minhas Atas</a>  
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

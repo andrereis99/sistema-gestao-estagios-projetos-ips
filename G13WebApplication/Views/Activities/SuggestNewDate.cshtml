@@ -1,0 +1,25 @@
+﻿@model int
+@using System.Security.Claims;
+@{
+    ViewData["Title"] = "SuggestNewDate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sugerir Nova Data</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuggestNewDateConfirmed">
+            <div class="form-group">
+                <input name="id" type="hidden" value="@Model" />
+            </div>
+            <div class="form-group">
+                <label for="DateT" class="control-label">Data</label>
+                <input name="DateT" type="datetime-local" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sugerir" class="btn btn-primary btn-blue-custom" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@model G13WebApplication.Models.Student
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Perfil";
+}
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<div class="container h-50">
+    <h2 class="h3-custom">Perfil Pessoal de Outro Utilizador</h2>
+    <hr />
+    <div class="row h-100">
+        <div class="col-5">
+            <div class="card-body text-center h-75">
+                <br />
+                <img src="~/UsersImages/@ViewBag.Image" name="profilePhoto" class="rounded-circle" width="150" height="150">
+                <br />
+                <br />
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body card-custom2 h-100">
+                <h5>@Model.FirstName @Model.LastName</h5>
+                <br />
+                <h5>Nº @Model.StudentNumber</h5>
+                <br />
+                <h5>@Model.Email</h5>
+                <br />
+                @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC" ||
+                 ViewData["DO1"] != null && User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor).Value.Equals(ViewData["DO1"].ToString()) ||
+                 ViewData["DO2"] != null && User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor).Value.Equals(ViewData["DO2"].ToString()))
+                {
+                    <a class="btn btn-primary btn-blue-custom w-100" asp-controller="Atas" asp-action="ViewStudentAtas" asp-route-StudentNumber="@Model.StudentNumber" style="margin-top:-4%">Ver Atas do Aluno</a>
+                    <br /><br /><a class="btn btn-primary btn-blue-custom w-100" asp-action="ViewStudentPublicProof" asp-route-StudentNumber="@Model.StudentNumber" style="margin-top:-4%">Ver Prova Pública</a>
+                }
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body card-custom h-100">
+                <h5>DO: @ViewData["auxTeacherNameString"]</h5>
+                <br />
+                <h5>Tipo TFC: @ViewData["auxTfcTypeString"]</h5>
+                <br />
+                <h5> TFC: @ViewData["auxTfcTypeString"]</h5>
+                <br />
+                @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+                {
+                    <a class="btn btn-primary btn-blue-custom w-100" asp-controller="Students" asp-action="SearchDOasRUC" asp-route-id="@Model.StudentId" style="margin-top:-4.4%">Atribuir DO</a>
+                    <br /><br />
+                    <a class="btn btn-primary btn-blue-custom w-100" asp-controller="Tfcs" asp-action="SearchTFCasRUC" asp-route-id="@Model.StudentId" style="margin-top:-4.4%">Atribuir TFC</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

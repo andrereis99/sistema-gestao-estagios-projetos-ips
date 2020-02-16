@@ -1,0 +1,37 @@
+﻿@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="h3-custom">Criar Atividade</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label for="ActivityType" class="control-label">Tipo de Atividade</label>
+                <select class="form-control rounded" name="ActivityType">
+                    <option value="Reunião">Reunião</option>
+                   @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+                    {
+                        <option value="Prova">Prova Pública</option>
+                        <option value="Palestra">Palestra</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="DateT" class="control-label">Data</label>
+                <input name="DateT" type="datetime-local" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Local" class="control-label">Local</label>
+                <input name="Local" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary btn-blue-custom" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<G13WebApplication.Models.Teacher>
+
+
+@{
+    ViewData["Title"] = "SearchDOasRUC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<h2 class="h3-custom">Lista de Professores Disponíveis</h2>
+<table class="table text-center" style="margin-top:2%">
+    <thead>
+        <tr>
+            <th>
+                Primeiro Nome
+            </th>
+            <th>
+                Apelido
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                Área Leccionada
+            </th>
+            <th>
+                Tarefa
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Taught_Area)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    <a asp-action="EnviarPedidoDOasRUC" asp-route-id="@item.TeacherId"asp-route-studentId="@ViewData["studentId"]" class="a-custom">Pedir Orientação</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

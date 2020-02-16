@@ -1,0 +1,54 @@
+﻿@model G13WebApplication.Models.Tfc
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+    </head>
+    <h2 class="h3-custom">Criação de TFC</h2>
+<hr />
+
+<div class="container">
+    <div class="row">
+            <form method="post" asp-controller="Tfcs" asp-action="Create" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="TfcType" class="control-label">Tipo de trabalho</label>
+                    <select class="form-control rounded" name="TfcType">
+                        <option value="Estágio">Estágio</option>
+                        <option value="Projeto">Projeto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="control-label">Nome</label>
+                    <input name="Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="Details" class="control-label">Detalhes</label>
+                    <input name="Details" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="Company" class="control-label">Empresa</label>
+                    <input name="Company" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="Location" class="control-label">Localização</label>
+                    <input name="Location" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="fil" class="control-label">Anexo</label><br />
+                    <input name="fil" type="file" accept=".pdf" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submeter" class="btn btn-primary btn-blue-custom" />
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

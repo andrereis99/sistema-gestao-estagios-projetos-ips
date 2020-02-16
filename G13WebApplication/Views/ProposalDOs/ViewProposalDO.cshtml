@@ -1,0 +1,41 @@
+﻿@model IEnumerable<G13WebApplication.Models.ProposalDO>
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Mvc;
+
+@{
+    ViewData["Title"] = "ViewProposalDO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<h2 class="h3-custom">Ver propostas de DO</h2>
+<div class="container">
+    <table class="table text-center" style="margin-top:2%">
+        <thead>
+            <tr>
+                <th>
+                    Número de estudante
+                </th>
+                <th>
+                    Proposta
+                </th>
+            </tr>
+        </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentNumber)
+                </td>
+                <td>
+                    <a asp-action="TreatProposal" asp-route-id="@item.ProposalId" class="a-custom">Ver proposta</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

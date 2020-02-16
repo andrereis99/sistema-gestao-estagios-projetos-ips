@@ -1,0 +1,8 @@
+﻿
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+@if (TempData["notification"] != null)
+{
+    @Html.Raw(TempData["notification"])
+}

@@ -1,0 +1,75 @@
+﻿@model G13WebApplication.Models.Tfc
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+<h2 class="h3-custom">Detalhes de TFC</h2>
+<hr />
+<div class="container">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TfcType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TfcType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        @if (Model.TfcFile != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TfcFile)
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-action="OpenFile" asp-route-id="@Model.TfcId" class="a-custom">Abrir ficheiro</a>
+            </dd>
+        }
+    </dl>
+</div>
+@if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Aluno")
+{
+    <div>
+        <br />
+        <a asp-controller="TfcProposals" asp-action="Create" asp-route-id="@Model.TfcId" class="btn btn-primary btn-blue-custom">Propor TFC</a>
+    </div>
+    <br />
+    <dl>
+        <dt class="col-sm-2">
+            Aviso:
+        </dt>
+        <dd class="col-sm-10">
+            A sua proposta será enviada para o responsável da unidade curricular para aceitação da mesma.<br />
+            Caso já tenha escolhido o tipo do seu trabalho final de curso, certifique-se de que este corresponde ao tipo de TFC a propor.
+            Caso contrário não será possivel propor a escolha deste trabalho.
+            Poderá alterar o tipo de TFC a qualquer momento.
+        </dd>
+    </dl>
+}

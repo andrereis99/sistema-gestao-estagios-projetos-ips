@@ -1,0 +1,68 @@
+﻿@model IEnumerable<G13WebApplication.Models.Tfc>
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "SearchTFCasRUC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SearchTFCasRUC</h1>
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+<table class="table text-center" style="margin-top: 3%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TfcType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TfcFile)
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TfcType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @if (item.TfcFile != null)
+                    {
+                        <a asp-action="OpenFile" asp-route-id="@item.TfcId" class="a-custom">Abrir ficheiro</a>
+                    }
+                </td>
+                <td>
+                    <a asp-action="AtribuirTFCasRUC" asp-route-id="@item.TfcId" asp-route-studentId="@ViewData["studentId"]" class="a-custom">Propor TFC ao Aluno</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

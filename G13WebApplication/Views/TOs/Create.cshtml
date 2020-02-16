@@ -1,0 +1,33 @@
+﻿@model G13WebApplication.Models.TO
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>TO</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label for="FirstName" class="control-label">Primeiro Nome</label>
+                <input name="FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="LastName" class="control-label">Ultimo Nome</label>
+                <input name="LastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input name="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

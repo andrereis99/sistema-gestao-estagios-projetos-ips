@@ -1,0 +1,46 @@
+﻿@model G13WebApplication.Models.TfcProposal
+
+@{
+    ViewData["Title"] = "NewPropose";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+    </head>
+
+<h4 class="h3-custom">Submeter Proposta um Estágio Externo à lista de propostas de Trabalhos</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateFromNew" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="TfcType" class="control-label">Tipo de trabalho</label>
+                <select class="form-control rounded" name="TfcType">
+                    <option value="Estágio">Estágio</option>
+                    <option value="Projeto">Projeto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fil" class="control-label">Anexo</label><br />
+                <input name="fil" type="file" accept=".pdf" />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Submeter Proposta" class="btn btn-primary btn-blue-custom" />
+            </div>
+        </form>
+    </div>
+    <dl>
+        <dt class="col-sm-2">
+            Aviso:
+        </dt>
+        <dd class="col-sm-10">
+            A sua proposta será enviada para o responsável da unidade curricular para aceitação da mesma.<br />
+            Caso já tenha escolhido o tipo do seu trabalho final de curso, certifique-se de que este corresponde ao tipo de TFC a propor.
+            Caso contrário não será possivel propor a escolha deste trabalho.
+            Poderá alterar o tipo de TFC a qualquer momento.
+        </dd>
+    </dl>
+</div>
+
+

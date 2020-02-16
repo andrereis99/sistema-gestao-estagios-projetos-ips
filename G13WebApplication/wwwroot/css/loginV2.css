@@ -1,0 +1,43 @@
+﻿.login-container {
+    margin-top: 5%;
+    margin-bottom: 2%;
+    font-family:Helvetica, Arial, sans-serif;
+}
+
+.login-form-2 {
+    padding: 3%;
+    background: #6DAFFE;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 5px 9px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+
+    .login-form-2 h3 {
+        text-align: center;
+        color: #fff;
+    }
+
+.login-container form {
+    padding: 3%;
+}
+
+.btnSubmit {
+    width: 50%;
+    border-radius: 1rem;
+    padding: 0.5%;
+    border: none;
+    cursor: pointer;
+}
+
+.login-form-2 .btnSubmit {
+    font-weight: 600;
+    color: #6DAFFE;
+    background-color: #fff;
+}
+
+.login-form-2 .ForgetPwd {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+

@@ -1,0 +1,40 @@
+﻿@model G13WebApplication.Models.Ata
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+<h2 class="h3-custom">Pretende apagar este documento?</h2>
+<hr />
+<div class="container">
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StudentId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FilePath)
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="OpenFile" asp-controller="Atas" asp-route-id="@Model.AtaId" class="a-custom">Abrir ficheiro</a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MeetingDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MeetingDate)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" name="activityId" value="@ViewBag.ActivityId"/>
+        <input type="hidden" name="AtaId" asp-for="AtaId" />
+        <input type="submit" value="Apagar" class="btn btn-danger" />
+    </form>
+</div>

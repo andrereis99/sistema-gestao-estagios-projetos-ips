@@ -1,0 +1,50 @@
+﻿@model IEnumerable<G13WebApplication.Models.User>
+
+@{
+    ViewData["Title"] = "AddToActivity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<h2 class="h3-custom">Adicionar Participantes à Atividade</h2>
+<br />
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                Número de Estudante
+            </th>
+            <th>
+                Número de Docente
+            </th>
+            <th>
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeacherId)
+            </td>
+            <td>
+                <a class="a-custom" asp-action="Create" asp-route-id="@ViewData["ActivityId"]" asp-route-userId="@item.UserId" >Adicionar Participante</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

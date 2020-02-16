@@ -1,0 +1,35 @@
+﻿@model G13WebApplication.Models.Activity
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="h3-custom">Edição de Atividade</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ActivityId" />
+            <div class="form-group">
+                <label asp-for="ActivityType" class="control-label"></label>
+                <input asp-for="ActivityType" class="form-control" />
+                <span asp-validation-for="ActivityType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateT" class="control-label"></label>
+                <input asp-for="DateT" class="form-control" />
+                <span asp-validation-for="DateT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Local" class="control-label"></label>
+                <input asp-for="Local" class="form-control" />
+                <span asp-validation-for="Local" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Editar" class="btn btn-primary btn-blue-custom" />
+            </div>
+        </form>
+    </div>
+</div>

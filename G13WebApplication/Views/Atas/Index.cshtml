@@ -1,0 +1,66 @@
+﻿@model IEnumerable<G13WebApplication.Models.Ata>
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+
+@if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Aluno")
+{
+    <h2 class="h3-custom">Minhas Atas</h2>
+}
+else
+{
+    <h2 class="h3-custom">Atas</h2>
+}
+<div class="container">
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MeetingDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FilePath)
+                </th>
+                <th>
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeetingDate.Day)/
+                        @Html.DisplayFor(modelItem => item.MeetingDate.Month)/
+                        @Html.DisplayFor(modelItem => item.MeetingDate.Year)    (@Html.DisplayFor(modelItem => item.MeetingDate.DayOfWeek))
+                    </td>
+                    <td>
+                        <a asp-action="OpenFile" asp-route-id="@item.AtaId" class="a-custom">Abrir ficheiro</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.AtaId" class="a-custom">Detalhes</a>
+                        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Aluno")
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.AtaId" class="a-custom">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@item.AtaId" class="a-custom">Remover</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

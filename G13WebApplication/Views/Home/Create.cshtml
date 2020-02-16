@@ -1,0 +1,57 @@
+﻿@model G13WebApplication.Models.Activity_Document
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="CreateTemplate" asp-controller="Home" asp-route-userId="@ViewBag.UserId" asp-route-activityId="@ViewBag.ActivityId" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DocumentName" class="control-label"></label>
+                <input asp-for="DocumentName" name="documentName" class="form-control" />
+                <span asp-validation-for="DocumentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentPath" class="control-label"></label>
+                <label for="fil" class="control-label" style="margin-left:-1%"></label>
+                <input name="fil" type="file" accept=".pdf, .docx, .xlsx" />
+            </div>
+            <div class="form-group">
+                <input asp-for="Comments" name="comments" class="form-control" value="Template" type="hidden"/>
+            </div>
+            <div class="form-group">
+                <input asp-for="UserId" type="hidden" value="@ViewBag.UserId" />
+            </div>
+            <div class="form-group">
+                <input asp-for="ActivityId" type="hidden" value="@ViewBag.ActivityId" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    "use strict";
+
+    function AJAXSubmit(oFormElement) {
+        var oReq = new XMLHttpRequest();
+        oReq.onload = function (e) {
+            oFormElement.elements.namedItem("result").value =
+                'Result: ' + this.status + ' ' + this.statusText;
+        };
+        oReq.open("post", oFormElement.action);
+        oReq.send(new FormData(oFormElement));
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

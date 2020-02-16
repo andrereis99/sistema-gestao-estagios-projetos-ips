@@ -1,0 +1,146 @@
+﻿@model IEnumerable<G13WebApplication.Models.User>
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Mvc;
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+        <script src="~/wwwroot/js/site.js"></script>
+    </head>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+            {
+                <input type="search" class="light-table-filter form-control mr-sm-2" data-table="table-info" placeholder="Pesquisar Utilizadores">
+            }
+            else
+            {
+                <form class="form-inline ml-auto" asp-controller="Teachers" asp-action="Search" method="get">
+                    <div class="input-group">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Email" name="SearchString" aria-label="Search">
+                        <input class="btn btn-primary mb-2 btncustom" type="submit" value="Filtrar" />
+                    </div>
+                </form>
+                @Html.ActionLink("Remover Filtro", "Search", "Teachers", null, new { @class = "btn btn-link" })
+            }
+        </div>
+    </div>
+    @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+    {
+        <div class="row" style="margin-top: 2%; margin-left: 1.4%">
+            <form style="margin-top: 2%; margin-left: 1.4%" method="post" asp-controller="Home" asp-action="ImportUpload" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-auto">
+                        <!--<input type="file" id="reportfile" name="reportfile" class="file" />-->
+                        <input type="file" class="custom-file-input" id="reportfile" name="reportfile" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <label class="custom-file-label" for="reportfile">Lista de Alunos (excel)</label>
+                    </div>
+                    <div class="col-md-auto">
+                        <input class="btn btn-primary mb-2 btncustom" type="submit" id="btnUpload" value="Adicionar" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br />
+        <div class="row" style="margin-left: 1.4%">
+            <div class="row">
+                <div class="col-md-auto">
+                    @Html.ActionLink("Criar um utilizador", "CreateUser", "Teachers", null, new { @class = "btn btn-primary mb-2 btncustom" })
+                </div>
+            </div>
+        </div>
+    }
+
+    <table class="table-info table text-center" style="margin-top:2%">
+        <thead>
+            <tr>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Número de estudante
+                </th>
+                <th>
+                    ID de Docente
+                </th>
+                <th>
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherId)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Perfil", "OtherProfile", "Users", new { id = item.UserId }, new { @class = "btn btn-link" })
+                        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+                        {
+                            @Html.ActionLink("Remover", "Delete", "Users", new { id = item.UserId }, new { @class = "btn btn-link" });
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    (function (document) {
+	    'use strict';
+
+	    var TableFilter = (function (Arr) {
+
+	        var _input;
+
+	        function _onInputEvent(e) {
+		        _input = e.target;
+		        var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+		        Arr.forEach.call(tables, function (table) {
+			        Arr.forEach.call(table.tBodies, function (tbody) {
+				        Arr.forEach.call(tbody.rows, _filter);
+			        });
+		        });
+	        }
+
+	        function _filter(row) {
+		        var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+		        row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+	        }
+
+	        return {
+		        init: function () {
+			        var inputs = document.getElementsByClassName('light-table-filter');
+			        Arr.forEach.call(inputs, function (input) {
+				        input.oninput = _onInputEvent;
+			        });
+		        }
+	        };
+	    })(Array.prototype);
+
+	    document.addEventListener('readystatechange', function () {
+		    if (document.readyState === 'complete') {
+			    TableFilter.init();
+		    }
+	    });
+
+    })(document);
+
+</script>

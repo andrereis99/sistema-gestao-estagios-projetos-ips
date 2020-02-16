@@ -1,0 +1,162 @@
+.h3-custom {
+    color: #b9732f;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+table {
+    font-family: Helvetica, Arial, sans-serif;
+} 
+th {
+    background-color: #437FC7;
+    color: white;
+}
+
+.table-white th {
+    background-color:white;
+    color: black;
+}
+
+.table-info tr:nth-of-type(even) {
+    background: #ffffff;
+}
+
+.table-info tr {
+    background: #EDF6FF;
+}
+.btncustom {
+    background-color: #437FC7;
+    color: white;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.index-row-top{
+}
+
+.index-row-end {
+    margin-top: 3%;
+}
+
+.col-custom {
+    border: 1px solid black;
+    font-weight: bold;
+    font-size: 1.5em;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.col1 {
+    background-color: #437FC7;
+    color: white;
+    border: 1px solid white;
+    overflow-y: hidden;
+}
+
+.col2 {
+    background-color: white;
+    color: #b9732f;
+    border: 1px solid #b9732f;
+    overflow-y: hidden;
+}
+
+.col3 {
+    background-color: white;
+    color: #437FC7;
+    border: 1px solid #437FC7;
+    overflow-y: hidden;
+}
+.col4 {
+    background-color: #b9732f;
+    color: white;
+    border: 1px solid white;
+    overflow-y: hidden;
+}
+
+.btn-white-custom {
+    background-color: white;
+    color: #437FC7;
+}
+.btn-white-custom:hover{
+    background-color: white;
+    color: #437FC7;
+}
+.btn-blue-custom {
+    background-color: #437FC7;
+    color: white;
+}
+.btn-blue-custom:hover {
+    background-color: #437FC7;
+    color: white;
+}
+.btn-gold-custom {
+    background-color: #b9732f;
+    color: white;
+    border: 1px solid #b9732f;
+}
+.btn-gold-custom:hover {
+    background-color: #b9732f;
+    color: white;
+    border: 1px solid #b9732f;
+}
+.btn-white-gold-custom {
+    background-color: white;
+    color: #b9732f;
+    border: 1px solid white;
+}
+.btn-white-gold-custom:hover {
+    background-color: white;
+    color: #b9732f;
+    border: 1px solid white;
+}
+
+.container-custom {
+    height: 65vh;
+    margin-top: 1%;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.tfctype_form {
+    text-align: center;
+    background-color: #437FC7;
+    color: white;
+    border: 1px solid white;
+}
+
+.card-custom2 {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-left: solid 2px #437FC7;
+}
+
+.card-custom {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-left: solid 2px white;
+}
+
+.a-custom {
+    color: #437FC7;
+}
+
+.btn-group-element {
+    background-color: #4CAF50; 
+    border: 1px solid green; 
+    color: white; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: left; 
+}
+
+    .btn-group-element:not(:last-child) {
+        border-right: none; 
+    }
+
+
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Add a background color on hover */
+.btn-group-element:hover {
+    background-color: #3e8e41;
+}

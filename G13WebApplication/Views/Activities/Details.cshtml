@@ -1,0 +1,316 @@
+﻿@model IEnumerable<User>
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<h2 class="h3-custom">Detalhes de @ViewBag.Activity.ActivityType</h2>
+<hr />
+
+<div class="row">
+    <div class="col-5">
+        <dl class="row">
+            <dt class="col-sm-10">
+                Tipo de Atividade
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.Activity.ActivityType
+            </dd>
+            <dt class="col-sm-10">
+                Data / Horas
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.Activity.DateT
+            </dd>
+            <dt class="col-sm-10">
+                Local
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.Activity.Local
+            </dd>
+        </dl>
+
+
+        <div>
+            @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno"  && User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "TO")
+            {
+                <a class="a-custom" asp-controller="Activity_Participants" asp-action="AddToActivity" asp-route-id="@ViewBag.Activity.ActivityId">Adicionar participantes</a>
+            }
+            @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno" && !ViewBag.Activity.ActivityType.Equals("Palestra"))
+            {
+                <span> | </span>
+            }
+            @if (!ViewBag.Activity.ActivityType.Equals("Palestra"))
+            {
+                <a class="a-custom" asp-action="SuggestNewDate" asp-route-id="@ViewBag.Activity.ActivityId">Sugerir uma nova data</a>
+            }
+        </div>
+    </div>
+
+
+    @if (!ViewBag.Activity.ActivityType.Equals("Palestra"))
+    {
+        <div class="col-7">
+            <table class="table text-center table-white table-borderless" style="margin-top:-2%;">
+                <tr>
+                    <th>
+                        Participante
+                    </th>
+                    <th>
+                        Data
+                    </th>
+                    <th>
+                        Ações
+                    </th>
+                </tr>
+                <tbody>
+                    @foreach (var date in ViewBag.Dates)
+                    {
+                        foreach (var user in Model)
+                        {
+                            if (date.UserId == user.UserId)
+                            {
+                                var i = "";
+                                if (date.Accepted == -1) { i = "#fa7878"; }
+                                <tr bgcolor="@i">
+                                    <td>
+                                        @user.Email
+                                    </td>
+                                    <td>
+                                        @date.Suggested_Date
+                                    </td>
+                                    <td>
+                                        @if (date.Accepted == 0)
+                                        {
+                                            <a class="a-custom" asp-action="AcceptSuggestion"
+                                               asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Aceitar Sugestão</a>
+                                            <a class="a-custom" asp-action="RejectSuggestion"
+                                               asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Recusar Sugestão</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+<br />
+
+<table class="table text-center">
+    <tr>
+        <th>
+            Participantes
+        </th>
+        <th>
+            Ações
+        </th>
+        <th>
+            Falta
+        </th>
+    </tr>
+    <tbody>
+        @foreach (var participant in ViewBag.Participantes)
+        {
+            @foreach (var user in Model)
+            {
+                if (user.UserId == participant.UserId)
+                {
+                    var j = "";
+                    if (participant.Absence == -1) { j = "#afeb94"; }
+                    else if (participant.Absence == 1) { j = "#fa7878"; }
+                    <tr bgcolor="@j">
+                        @if (user.TeacherId != null)
+                        {
+                            <td><a class="a-custom" asp-controller="Teachers" asp-action="OtherProfile" asp-route-id="@user.TeacherId">@user.Email</a></td>
+                        }
+                        else
+                        {
+                            <td><a class="a-custom" asp-controller="Students" asp-action="OtherProfile" asp-route-id="@user.StudentId">@user.Email</a></td>
+                        }
+                        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno" &&
+              User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "TO")
+                        {
+                            <td>
+                                <a class="a-custom" asp-controller="Activity_Participants" asp-action="Delete"
+                                   asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Remover da Atividade | </a>
+                                @if (participant.Absence == -1)
+                                {
+                                    <a class="a-custom" asp-controller="Activity_Participants" asp-action="RemoveAbsence"
+                                       asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Remover Presença </a>
+                                }
+                                else if (participant.Absence == 1)
+                                {
+                                    <a class="a-custom" asp-controller="Activity_Participants" asp-action="RemoveAbsence"
+                                       asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Remover Falta </a>
+                                }
+                                else
+                                {
+                                    <a class="a-custom" asp-controller="Activity_Participants" asp-action="MarkAbsence"
+                                       asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Marcar Falta</a> <a> | </a>
+                                    <a class="a-custom" asp-controller="Activity_Participants" asp-action="MarkPresence"
+                                       asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@user.UserId">Marcar Presença</a>
+                                }
+
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                        @if (Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == participant.UserId && participant.WontAttend == 0)
+                        {
+                            <td><a class="a-custom" asp-controller="Activity_Participants" asp-action="MarkFoul" asp-route-userId="@user.UserId" asp-route-activityId="@ViewBag.Activity.ActivityId">Avisar de falta</a></td>
+                        }
+                        else if (Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == participant.UserId && participant.WontAttend == 1)
+                        {
+                            <td><a class="a-custom" asp-controller="Activity_Participants" asp-action="RemoveFoul" asp-route-userId="@user.UserId" asp-route-activityId="@ViewBag.Activity.ActivityId">Remover aviso de falta</a></td>
+                        }
+                        else if (participant.WontAttend == 0)
+                        {
+                            <td></td>
+                        }
+                        else if (participant.WontAttend == 1)
+                        {
+                            <td><span style="color: red"> Não vai </span></td>
+                        }
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div>
+    <a class="a-custom" style="margin-top:2%" asp-controller="Activity_Document" asp-action="Create" asp-route-id="@ViewBag.Activity.ActivityId" asp-route-userId="@Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value)">Anexar documentos</a>
+</div>
+<br />
+<table class="table text-center">
+    <tr>
+        <th>
+            Ator
+        </th>
+        <th>
+            Nome do ficheiro
+        </th>
+        <th>
+            Data de submissão
+        </th>
+        <th>
+            Abrir documeto
+        </th>
+        <th>
+            Observações
+        </th>
+        <th>
+            Ações
+        </th>
+    </tr>
+    <tbody>
+        @foreach (var activity_document in ViewBag.Activity_Documents)
+        {
+            @foreach (var user_document in Model)
+            {
+                if (activity_document.UserId == user_document.UserId)
+                {
+                    var k = "";
+                    if (activity_document.FlagReject == -1) { k = "#afeb94"; }
+                    else if (activity_document.FlagReject == 1) { k = "#fa7878"; }
+                    <tr bgcolor="@k">
+                        <td>
+                            <a class="a-custom" asp-controller="Users" asp-action="OtherProfile" asp-route-id="@user_document.UserId">@user_document.Email</a>
+                        </td>
+                        <td>
+                            @activity_document.DocumentName
+                        </td>
+                        <td>
+                            @activity_document.SubmitionData.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            <a asp-action="OpenDocument" asp-route-id="@activity_document.Activity_DocumentId" class="a-custom">Abrir ficheiro</a>
+                        </td>
+                        <td>
+                            @activity_document.Comments
+                        </td>
+                        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno" && activity_document.FlagReject == 0 && (Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) != activity_document.UserId))
+                        {
+                            <td>
+                                <a asp-action="AcceptDocument" asp-controller="Activity_Document" asp-route-documentId="@activity_document.Activity_DocumentId" asp-route-activityId="@activity_document.ActivityId" class="a-custom">Aceitar</a> |
+                                <a asp-action="RejectDocument" asp-controller="Activity_Document" asp-route-documentId="@activity_document.Activity_DocumentId" asp-route-activityId="@activity_document.ActivityId" class="a-custom">Recusar</a>
+                            </td>
+                        }
+                        else if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC" || Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == activity_document.UserId)
+                        {
+                            <td><a asp-action="Delete" asp-controller="Activity_Document" asp-route-id="@activity_document.Activity_DocumentId" asp-route-activityId="@ViewBag.Activity.ActivityId" class="a-custom">Apagar</a></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    </tr>
+                }
+            }
+        }
+
+
+        @foreach (var ata in ViewBag.Atas)
+        {
+            var h = "";
+            if (ata.FlagReject == -1) { h = "#afeb94"; }
+            else if (ata.FlagReject == 1) { h = "#fa7878"; }
+
+            <tr bgcolor="@h">
+                @foreach (var user in Model)
+                {
+                    if (ata.UserId != 0 && ata.UserId == user.UserId)
+                    {
+                        <td>
+                            <a class="a-custom" asp-controller="Users" asp-action="OtherProfile" asp-route-id="@user.UserId">@user.Email</a>
+                        </td>
+                    }
+                    else if (ata.UserId == 0 && ata.StudentId == user.StudentId)
+                    {
+                        <td>
+                            <a class="a-custom" asp-controller="Users" asp-action="OtherProfile" asp-route-id="@user.UserId">@user.Email</a>
+                        </td>
+                    }
+                }
+                <td>
+                    Ata de @ata.MeetingDate.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @ata.MeetingDate.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    <a asp-action="OpenFile" asp-controller="Atas" asp-route-id="@ata.AtaId" class="a-custom">Abrir ficheiro</a>
+                </td>
+                <td />
+                @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno" && ata.FlagReject == 0 && (Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) != ata.UserId))
+                {
+                    <td>
+                        <a asp-action="AcceptAta" asp-controller="Atas" asp-route-ataId="@ata.AtaId" asp-route-activityId="@ViewBag.Activity.ActivityId" class="a-custom">Aceitar</a> |
+                        <a asp-action="RejectAta" asp-controller="Atas" asp-route-ataId="@ata.AtaId" asp-route-activityId="@ViewBag.Activity.ActivityId" class="a-custom">Recusar</a>
+                    </td>
+                }
+                else if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC" ||
+                        User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Aluno" && Int32.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value) == ata.StudentId)
+                {
+                    <td><a asp-action="Delete" asp-controller="Atas" asp-route-id="@ata.AtaId" asp-route-activityId="@ViewBag.Activity.ActivityId" class="a-custom">Apagar</a></td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

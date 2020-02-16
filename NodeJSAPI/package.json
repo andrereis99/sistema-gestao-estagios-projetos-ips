@@ -1,0 +1,23 @@
+{
+  "name": "nodejsnotificacao",
+  "version": "1.0.0",
+  "description": "notificações para node js com email sender",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "g13",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "Express": "^3.0.1",
+    "async": "^3.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "msnodesqlv8": "^0.8.6",
+    "mssql": "^6.0.1",
+    "node-cron": "^2.0.3",
+    "sendgrid": "^5.2.3",
+    "socket.io": "^2.3.0"
+  }
+}

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Activity_Document>
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<h1>Documentos gerais</h1>
+
+<p>Nesta página estão alguns ficheiros que poderão servir de templates para várias ocasiões</p>
+
+@if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+{
+    <p><a asp-action="AddTemplate" asp-controller="Home" class="a-custom">Adicionar template</a></p>
+}
+else
+{
+    <p></p>
+}
+
+@foreach (var document in Model)
+{
+    <p>
+        <a asp-action="OpenTemplate" asp-controller="Home" asp-route-name="@document.DocumentName" class="a-custom">
+            @if (document.DocumentPath.Split('.')[1].Equals("docx"))
+            {
+                <img src="https://moodle.ips.pt/1920/theme/image.php/boost/core/1578048626/f/document-24" class="iconlarge activityicon" alt="" role="presentation" aria-hidden="true">
+            }
+            else if (document.DocumentPath.Split('.')[1].Equals("xlsx"))
+            {
+                <img src="https://moodle.ips.pt/1920/theme/image.php/boost/core/1578048626/f/spreadsheet-24" class="iconlarge activityicon" alt="" role="presentation" aria-hidden="true">
+            }
+            else if (document.DocumentPath.Split('.')[1].Equals("pdf"))
+            {
+                <img src="https://moodle.ips.pt/1920/theme/image.php/boost/core/1578048626/f/pdf-24" class="iconlarge activityicon" alt="" role="presentation" aria-hidden="true">
+            }
+            <span>@document.DocumentName</span>
+        </a>
+        @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC")
+        {
+            <a> | </a> <a asp-action="Delete" asp-controller="Home" asp-route-id="@document.Activity_DocumentId" class="a-custom">Apagar</a>
+        }
+    </p>
+    }

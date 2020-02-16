@@ -1,0 +1,25 @@
+﻿@model G13WebApplication.Models.ProposalDO
+
+@{
+    ViewData["Title"] = "TreatProposal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<div class="container container-custom">
+    <h2 class="h3-custom">Tratamento de Propostas de Orientação</h2>
+    <br />
+    <div class="col h-50 w-50 col-custom rounded col3 text-center">
+        <div class="card-body">
+            <h4 class="card-title">Pedido de Orientação de Estágio</h4>
+            <p class="card-text">O aluno nº @Html.DisplayFor(model => model.StudentNumber) propõe-se para ser o seu aluno orientado.</p>
+            <a class="btn btn-primary btn-blue-custom" asp-action="AcceptProposal" asp-route-id="@Model.ProposalId">Aceito</a>
+            <a class="btn btn-primary btn-gold-custom" asp-action="RejectProposal" asp-route-id="@Model.ProposalId">Não aceito</a>
+        </div>
+    </div>
+</div>
+

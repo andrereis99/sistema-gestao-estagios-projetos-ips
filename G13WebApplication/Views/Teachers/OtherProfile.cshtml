@@ -1,0 +1,32 @@
+﻿@model G13WebApplication.Models.Teacher
+
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+<div class="container h-50">
+    <h2 class="h3-custom">Perfil de Outro Utilizador</h2>
+    <hr />
+    <div class="row h-100">
+        <div class="col-5">
+            <div class="card-body text-center h-75">
+                <img src="~/UsersImages/@ViewBag.Image" name="profilePhoto" class="rounded-circle" width="150" height="150">
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body card-custom2 h-100">
+                <br />
+                <h5>@Model.FirstName @Model.LastName</h5>
+                <br />
+                <h5>@Model.Email</h5>
+                <br />
+                <h5>Função: @Model.Role</h5>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<G13WebApplication.Models.TfcProposal>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+    </head>
+<h2 class="h3-custom">Lista de Propostas de TFC Pendentes</h2>
+<br />
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                Número de Estudante
+            </th>
+            <th>
+                Tipo de Proposta
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentNumber)
+            </td>
+            @if (@item.TfcId != 0)
+            {
+                <td>
+                    Proposto na lista
+                </td>
+            }
+            else
+            {
+                <td>
+                    Externo à lista
+                </td>
+            }
+            <td>
+                <a class="a-custom" asp-action="Details" asp-route-id="@item.TfcProposalId">Detalhes</a> |
+                <a class="a-custom" asp-action="Accept" asp-route-id="@item.TfcProposalId">Aceitar</a> |
+                <a class="a-custom" asp-action="Refuse" asp-route-id="@item.TfcProposalId">Recusar</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+﻿@model G13WebApplication.Models.Tfc
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+    </head>
+    <h2 class="h3-custom">Proposta de TFC do Aluno Numero @ViewData["StudentNumber"]</h2>
+<div >
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Numero de Estudante
+        </dt>
+        <dd class="col-sm-10">
+            @ViewData["StudentNumber"]
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TfcType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TfcType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Company)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        @if (Model.TfcFile != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TfcFile)
+            </dt>
+            <dd class="col-sm-10">
+                <a asp-controller="Tfcs" asp-action="OpenFile" asp-route-id="@Model.TfcId" class="a-custom">Abrir ficheiro</a>
+            </dd>
+        }
+    </dl>
+</div>

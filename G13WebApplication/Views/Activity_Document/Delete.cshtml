@@ -1,0 +1,48 @@
+﻿@model G13WebApplication.Models.Activity_Document
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+<h3>Pretende apagar este documento?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DocumentName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DocumentName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubmitionData)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SubmitionData)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DocumentPath)
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="OpenDocument" asp-controller="Activities" asp-route-id="@Model.Activity_DocumentId" class="a-custom">Abrir ficheiro</a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" name="activityId" value="@ViewBag.ActivityId" />
+        <input type="hidden" name="id" asp-for="Activity_DocumentId" />
+        <input type="submit" id="deleteDoc" value="Delete" class="btn btn-danger" />
+    </form>
+</div>

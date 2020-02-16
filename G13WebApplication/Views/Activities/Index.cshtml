@@ -1,0 +1,78 @@
+﻿@model IEnumerable<G13WebApplication.Models.Activity>
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+
+<h2 class="h3-custom">Atividades</h2>
+
+@if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno" && User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "TO")
+{
+    <p>
+        <a class="a-custom" asp-action="Create">Criar Nova Atividade</a>
+    </p>
+}
+<br />
+<div class="btn-group">
+    <a class="btn btn-primary mb-2 btncustom" asp-action="Index" asp-route-filter="Palestra">Palestra</a>
+    <a class="btn btn-primary mb-2 btncustom" asp-action="Index" asp-route-filter="Prova">Prova Pública</a>
+    <a class="btn btn-primary mb-2 btncustom" asp-action="Index" asp-route-filter="Reunião">Reunião</a>
+</div>
+<br />
+
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Local)
+            </th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var i = "";
+            if(item.Canceled == 1) { i = "#fa7878"; }
+            <tr bgcolor="@i">
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Local)
+                </td>
+                <td>
+                    <a class="a-custom" asp-action="Details" asp-route-id="@item.ActivityId"> Detalhes </a>
+                    @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "Aluno" && User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value != "TO")
+                    {
+                        <a> | </a>
+                        <a class="a-custom" asp-action="Edit" asp-route-id="@item.ActivityId">Editar</a> 
+                         <a> | </a>
+                        if (item.Canceled == 1)
+                        {
+                            <a class="a-custom" asp-action="ResumeActivity" asp-route-id="@item.ActivityId"> Remarcar Atividade </a>
+                        }
+                        else
+                        {
+                            
+                            <a class="a-custom" asp-action="Cancel" asp-route-id="@item.ActivityId"> Cancelar </a>}
+                        }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

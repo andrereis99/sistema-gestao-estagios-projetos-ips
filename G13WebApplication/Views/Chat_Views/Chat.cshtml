@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+        #chat {
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        #chat div {
+            background-color: #CCC;
+            padding: 5px;
+        }
+
+        #chat div:nth-child(2n) {
+            background-color: #FFF;
+        }
+
+        #messageForm {
+            position: fixed;
+            padding-bottom: 30px;
+            bottom: 0;
+            background-color: white;
+            max-width: 1200px;
+            width: 50%;
+            display: flex;
+        }
+
+        #message {
+            flex-grow: 1;
+        }
+    </style>
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script defer src="~/js/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="messageArea" class="row">
+            <div class="col-md-4">
+                <div class="well">
+                    <h3>Utilizadores online</h3>
+                    <ul class="list-group" id="users"></ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="chat"></div>
+                <form id="messageForm" style="margin-bottom:3%">
+                    <input type="text" id="message">
+                    <button type="submit" id="send-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <input id="username-input" value="@ViewBag.Username" type="hidden" />
+</body>

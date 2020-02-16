@@ -1,0 +1,33 @@
+﻿@model G13WebApplication.Models.TfcProposal
+
+@{
+    ViewData["Title"] = "DetailsExternal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+    </head>
+    <head>
+        <link rel="stylesheet" href="~/css/varios.css" />
+    </head>
+
+<h2 class="h3-custom">Details</h2>
+<hr />
+<div>
+    <h4 class="h3-custom">Proposta de TFC</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StudentNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StudentNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Ficheiro
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="GetExternalProposalFile" asp-route-StudentNumber="@ViewData["StudentNumber"]" class="a-custom">Abrir ficheiro</a>
+        </dd>
+    </dl>
+</div>

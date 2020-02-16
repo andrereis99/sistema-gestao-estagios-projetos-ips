@@ -1,0 +1,42 @@
+﻿@model G13WebApplication.Models.WorkPlan
+
+@{
+    ViewData["Title"] = "ChooseTfc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/varios.css" />
+</head>
+<body>
+    <div class="container login-container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6 tfctype_form rounded" style="margin-top:2%">
+                <div class="card-body">
+                <!--<form asp-action="formTfc" asp-controller="WorkPlans">-->
+                <h4 class="card-title"> Escolha entre estágio e projeto:</h4>
+                <!-- Group of default radios - option 1 -->
+                @using (Html.BeginForm("formTfc", "WorkPlans"))
+                {
+                    <div class="custom-control custom-radio">
+                    @Html.RadioButton("TfcType", "Estágio") <span>Estágio</span> 
+                    <!--<input type="radio" class="custom-control-input" id="estagio" name="TfcType" value="Estágio" checked>
+                    <label class="custom-control-label" for="estagio">Estágio</label>-->
+                    </div>
+                <!-- Group of default radios - option 2 -->
+                    <div class="custom-control custom-radio" style="margin-top:1%">
+                    @Html.RadioButton("TfcType", "Projeto") <span>Projeto</span> 
+                    <!--<input type="radio" class="custom-control-input" id="projeto" name="TfcType" value="Projeto">
+                    <label class="custom-control-label" for="projeto">Projeto</label>-->
+                    </div>
+                     <br />
+                    <button id="subTfc" type="submit" class="btn btn-primary btn-white-custom" style="margin-top:1%">Escolher</button>
+                }<!--</form>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

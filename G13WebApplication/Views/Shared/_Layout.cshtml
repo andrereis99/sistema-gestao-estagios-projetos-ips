@@ -1,0 +1,107 @@
+﻿@{
+    NotificationsController nc = new NotificationsController();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - G13WebApplication</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link href="~/sweetAlert/sweetalert.css" rel="stylesheet" />
+    <script src="~/sweetAlert/sweetalert.min.js"></script>
+
+</head>
+<body>
+    <header>
+        @using System.Security.Claims;
+        
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            @if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "Aluno")
+            {
+                <a class="navbar-brand" asp-controller="Students" asp-action="Index">
+                    <img style="margin:0" src="~/images/ips.png" width="95" height="45" alt="">
+                </a>
+            }
+            else if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "TO")
+            {
+                <a class="navbar-brand" asp-controller="TOs" asp-action="Index">
+                    <img style="margin:0" src="~/images/ips.png" width="95" height="45" alt="">
+                </a>
+            }
+            else if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "RUC" || User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value == "DO")
+            {
+                <a class="navbar-brand" asp-controller="Teachers" asp-action="Index">
+                    <img style="margin:0" src="~/images/ips.png" width="95" height="45" alt="">
+                </a>
+            }
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Tfcs" asp-action="Index">Trabalhos Finais de Curso</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Documents">Documentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Chat">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Help">Ajuda</a>
+                    </li>
+                </ul>
+                <a class="navbar-brand" asp-controller="Home" asp-action="GoToStudentsList">
+                    <img src="~/images/lupa.png" width="30" height="30" alt="">
+                </a>
+                <a class="navbar-brand" asp-controller="Activities" asp-action="Index">
+                    <img src="~/images/calendario.png" width="30" height="30" alt="">
+                </a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="margin-left: -1%; margin-top:0.4%">
+                    <img src="~/images/notificacao.png" width="30" height="30" alt="">
+                    <span class="badge badge-danger ml-2" style="background-color: #B9732F">@nc.NotificationsCount(User)</span>
+
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" style="width:15%; margin-right: 3%;" aria-labelledby="navbarDropdownMenuLink-5">
+                    <ul>
+                        @if (nc.NotificationsCount(User) == 0)
+                        {
+                            <li> Não tem notificações neste momento.</li>
+                        }
+                        @foreach (var not in nc.GetNotifications(User))
+                        {
+                            <li><a asp-controller="Notifications" asp-action="Details" asp-route-id="@not.NotificationId" class="text-reset">@not.Message</a></li>
+                        }
+                    </ul>
+                </div>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Perfil">
+                    <img src="~/images/perfil.png" width="30" height="30" alt="">
+                </a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="GoToLogin">
+                    <img src="~/images/logout.png" width="30" height="30" alt="">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @Html.Partial("_NotificationPanel")
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - G13WebApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
